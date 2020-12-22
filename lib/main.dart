@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './transaction.dart';
+import './components.dart' as Components;
 
 void main() => runApp(MyApp());
 
@@ -53,42 +54,19 @@ class MyHomePage extends StatelessWidget {
                   (transaction) => Card(
                     child: Row(
                       children: [
-                        Container(
-                          child: Text(
+                        Components.amountContainer(
+                          child: Components.amountText(
                             transaction.amout.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.purple,
-                            ),
                           ),
-                          margin: EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.purple,
-                              width: 2,
-                            ),
-                          ),
-                          padding: EdgeInsets.all(10),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            Components.titleText(
                               transaction.title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
                             ),
-                            Text(
+                            Components.dateText(
                               transaction.date.toString(),
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
                             ),
                           ],
                         ),
