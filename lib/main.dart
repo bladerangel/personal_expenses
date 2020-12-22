@@ -16,8 +16,18 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final List<Transaction> transactions = [
-    Transaction(id: 't1', title: 'Shoes', amout: 30.99, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Shorts', amout: 49.99, date: DateTime.now()),
+    Transaction(
+      id: 't1',
+      title: 'Shoes',
+      amout: 30.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Shorts',
+      amout: 49.99,
+      date: DateTime.now(),
+    ),
   ];
 
   @override
@@ -39,9 +49,55 @@ class MyHomePage extends StatelessWidget {
           ),
           Column(
             children: transactions
-                .map((transaction) => Card(child: Text(transaction.title)))
+                .map(
+                  (transaction) => Card(
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Text(
+                            transaction.amout.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.purple,
+                            ),
+                          ),
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 15,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.purple,
+                              width: 2,
+                            ),
+                          ),
+                          padding: EdgeInsets.all(10),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              transaction.title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              transaction.date.toString(),
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
                 .toList(),
-          )
+          ),
         ],
       ),
     );
