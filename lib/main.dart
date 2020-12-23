@@ -32,6 +32,9 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
+  String titleInput;
+  String amoutInput;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,6 @@ class MyHomePage extends StatelessWidget {
         title: Text("App Bar"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -48,6 +50,41 @@ class MyHomePage extends StatelessWidget {
               child: Text('Chart!'),
               elevation: 5,
             ),
+          ),
+          Card(
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    onChanged: (value) {
+                      titleInput = value;
+                    },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amout'),
+                    onChanged: (value) {
+                      amoutInput = value;
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        textColor: Colors.purple,
+                        onPressed: () {
+                          print(titleInput);
+                          print(amoutInput);
+                        },
+                        child: Text('Add Transaction'),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            elevation: 5,
           ),
           Column(
             children: transactions
