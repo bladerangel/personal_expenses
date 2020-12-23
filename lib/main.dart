@@ -56,7 +56,7 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         Components.amountContainer(
                           child: Components.amountText(
-                            transaction.amout.toString(),
+                            '\$${transaction.amout}',
                           ),
                         ),
                         Column(
