@@ -11,33 +11,38 @@ class TransactionListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions
-          .map(
-            (transaction) => Card(
-              child: Row(
-                children: [
-                  Style.amountContainer(
-                    child: Style.amountText(
-                      '\$${transaction.amout}',
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: transactions
+              .map(
+                (transaction) => Card(
+                  child: Row(
                     children: [
-                      Style.titleText(
-                        transaction.title,
+                      Style.amountContainer(
+                        child: Style.amountText(
+                          '\$${transaction.amout}',
+                        ),
                       ),
-                      Style.dateText(
-                        DateFormat.yMMMMd().format(transaction.date),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Style.titleText(
+                            transaction.title,
+                          ),
+                          Style.dateText(
+                            DateFormat.yMMMMd().format(transaction.date),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          )
-          .toList(),
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 }
