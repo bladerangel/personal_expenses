@@ -7,7 +7,10 @@ import './transaction_list_style.dart' as Style;
 class TransactionListWidget extends StatelessWidget {
   final List<Transaction> transactions;
 
-  const TransactionListWidget({Key key, this.transactions}) : super(key: key);
+  const TransactionListWidget({
+    Key key,
+    this.transactions,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class TransactionListWidget extends StatelessWidget {
           ? Column(
               children: [
                 Text(
-                  'No transaction',
+                  'No transactions',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(

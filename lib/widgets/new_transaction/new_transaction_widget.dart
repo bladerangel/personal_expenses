@@ -5,7 +5,10 @@ import './new_transaction_widget style.dart' as Style;
 class NewTransactionWiget extends StatefulWidget {
   final Function onPressed;
 
-  NewTransactionWiget({Key key, this.onPressed}) : super(key: key);
+  NewTransactionWiget({
+    Key key,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   _NewTransactionWigetState createState() => _NewTransactionWigetState();

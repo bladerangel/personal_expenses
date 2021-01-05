@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-Container amountContainer({BuildContext context, Widget child}) => Container(
+Container amountContainer({
+  BuildContext context,
+  Widget child,
+}) =>
+    Container(
       child: child,
       margin: EdgeInsets.symmetric(
         vertical: 10,
@@ -15,7 +19,11 @@ Container amountContainer({BuildContext context, Widget child}) => Container(
       padding: EdgeInsets.all(10),
     );
 
-Text amountText(String data, {BuildContext context}) => Text(
+Text amountText(
+  String data, {
+  BuildContext context,
+}) =>
+    Text(
       data,
       style: TextStyle(
         fontWeight: FontWeight.bold,
@@ -24,7 +32,11 @@ Text amountText(String data, {BuildContext context}) => Text(
       ),
     );
 
-Text titleText(String data, {BuildContext context}) => Text(
+Text titleText(
+  String data, {
+  BuildContext context,
+}) =>
+    Text(
       data,
       style: Theme.of(context).textTheme.headline6,
     );
