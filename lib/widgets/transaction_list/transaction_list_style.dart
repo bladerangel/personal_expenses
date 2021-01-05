@@ -24,12 +24,9 @@ Text amountText(String data, {BuildContext context}) => Text(
       ),
     );
 
-Text titleText(String data) => Text(
+Text titleText(String data, {BuildContext context}) => Text(
       data,
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
+      style: Theme.of(context).textTheme.headline6,
     );
 
 Text dateText(String data) => Text(

@@ -30,6 +30,7 @@ class TransactionListWidget extends StatelessWidget {
                 children: [
                   Style.titleText(
                     transactions[index].title,
+                    context: context,
                   ),
                   Style.dateText(
                     DateFormat.yMMMMd().format(transactions[index].date),
