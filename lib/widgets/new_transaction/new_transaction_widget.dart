@@ -9,6 +9,19 @@ class NewTransactionWiget extends StatelessWidget {
 
   NewTransactionWiget({Key key, this.onPressed}) : super(key: key);
 
+  void submit() {
+    final title = titleInputController.text;
+    final amount = double.parse(amountInputController.text);
+
+    if (title.isEmpty || amount <= 0) {
+      return;
+    }
+    onPressed(
+      title,
+      amount,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,19 +33,19 @@ class NewTransactionWiget extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleInputController,
+              onSubmitted: (_) => submit(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amout'),
               controller: amountInputController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submit(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Style.addNewTransaction(
-                  onPressed: () => onPressed(
-                    titleInputController.text,
-                    double.parse(amountInputController.text),
-                  ),
+                  onPressed: submit,
                 ),
               ],
             )
