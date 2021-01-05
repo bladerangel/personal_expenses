@@ -19,8 +19,10 @@ class TransactionListWidget extends StatelessWidget {
           child: Row(
             children: [
               Style.amountContainer(
+                context: context,
                 child: Style.amountText(
                   '\$${transactions[index].amout.toStringAsFixed(2)}',
+                  context: context,
                 ),
               ),
               Column(

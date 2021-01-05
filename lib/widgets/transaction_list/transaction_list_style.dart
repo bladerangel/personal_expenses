@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Container amountContainer({Widget child}) => Container(
+Container amountContainer({BuildContext context, Widget child}) => Container(
       child: child,
       margin: EdgeInsets.symmetric(
         vertical: 10,
@@ -8,19 +8,19 @@ Container amountContainer({Widget child}) => Container(
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.purple,
+          color: Theme.of(context).primaryColor,
           width: 2,
         ),
       ),
       padding: EdgeInsets.all(10),
     );
 
-Text amountText(String data) => Text(
+Text amountText(String data, {BuildContext context}) => Text(
       data,
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 20,
-        color: Colors.purple,
+        color: Theme.of(context).primaryColor,
       ),
     );
 
