@@ -20,7 +20,7 @@ class TransactionListWidget extends StatelessWidget {
             children: [
               Style.amountContainer(
                 child: Style.amountText(
-                  '\$${transactions[index].amout}',
+                  '\$${transactions[index].amout.toStringAsFixed(2)}',
                 ),
               ),
               Column(
