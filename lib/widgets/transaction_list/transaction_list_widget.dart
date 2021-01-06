@@ -38,28 +38,31 @@ class TransactionListWidget extends StatelessWidget {
           : ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (context, index) => Card(
-                child: Row(
-                  children: [
-                    Style.amountContainer(
-                      context: context,
-                      child: Style.amountText(
-                        '\$${transactions[index].amout.toStringAsFixed(2)}',
-                        context: context,
+                margin: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 5,
+                ),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: FittedBox(
+                        child: Text(
+                          '\$${transactions[index].amout}',
+                        ),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Style.titleText(
-                          transactions[index].title,
-                          context: context,
-                        ),
-                        Style.dateText(
-                          DateFormat.yMMMMd().format(transactions[index].date),
-                        ),
-                      ],
+                  ),
+                  title: Text(
+                    transactions[index].title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(
+                    DateFormat.yMMMd().format(
+                      transactions[index].date,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
