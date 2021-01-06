@@ -15,13 +15,13 @@ class NewTransactionWiget extends StatefulWidget {
 }
 
 class _NewTransactionWigetState extends State<NewTransactionWiget> {
-  final titleInputController = TextEditingController();
+  final _titleInputController = TextEditingController();
+  final _amountInputController = TextEditingController();
+  DateTime _selectedDate;
 
-  final amountInputController = TextEditingController();
-
-  void submit() {
-    final title = titleInputController.text;
-    final amount = double.parse(amountInputController.text);
+  void _submit() {
+    final title = _titleInputController.text;
+    final amount = double.parse(_amountInputController.text);
 
     if (title.isEmpty || amount <= 0) {
       return;
@@ -35,6 +35,23 @@ class _NewTransactionWigetState extends State<NewTransactionWiget> {
     Navigator.of(context).pop();
   }
 
+  void _presentDatePicker() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime.now(),
+    );
+
+    if (date == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDate = date;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,19 +62,36 @@ class _NewTransactionWigetState extends State<NewTransactionWiget> {
           children: [
             Style.titleTextField(
               labelText: 'Title',
-              controller: titleInputController,
-              onSubmitted: submit,
+              controller: _titleInputController,
+              onSubmitted: _submit,
             ),
             Style.amountTextField(
               labelText: 'Amout',
-              controller: amountInputController,
-              onSubmitted: submit,
+              controller: _amountInputController,
+              onSubmitted: _submit,
+            ),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Style.selectedDateExpanded(
+                    _selectedDate,
+                  ),
+                  Style.chooseDateFlatButton(
+                    'Choose Date.',
+                    onPressed: _presentDatePicker,
+                    context: context,
+                  ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Style.addNewTransactionFlatButton(
-                  onPressed: submit,
+                Style.addNewTransactionRaisedButton(
+                  'Add Transaction',
+                  onPressed: _submit,
+                  context: context,
                 ),
               ],
             )

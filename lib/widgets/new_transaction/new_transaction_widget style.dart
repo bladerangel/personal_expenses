@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 TextField titleTextField({
   String labelText,
@@ -23,11 +24,36 @@ TextField amountTextField({
       onSubmitted: (_) => onSubmitted(),
     );
 
-FlatButton addNewTransactionFlatButton({
+Expanded selectedDateExpanded(DateTime date) => Expanded(
+      child: Text(
+        date == null ? 'No Date Chosen.' : DateFormat.yMd().format(date),
+      ),
+    );
+
+FlatButton chooseDateFlatButton(
+  String data, {
   Function onPressed,
+  BuildContext context,
 }) =>
     FlatButton(
-      textColor: Colors.purple,
+      textColor: Theme.of(context).primaryColor,
       onPressed: onPressed,
-      child: Text('Add Transaction'),
+      child: Text(
+        data,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+
+RaisedButton addNewTransactionRaisedButton(
+  String data, {
+  Function onPressed,
+  BuildContext context,
+}) =>
+    RaisedButton(
+      color: Theme.of(context).primaryColor,
+      textColor: Theme.of(context).textTheme.button.color,
+      onPressed: onPressed,
+      child: Text(data),
     );
