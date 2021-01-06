@@ -5,10 +5,12 @@ import './transaction_list_style.dart' as Style;
 
 class TransactionListWidget extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTransaction;
 
   const TransactionListWidget({
     Key key,
     this.transactions,
+    this.deleteTransaction,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,10 @@ class TransactionListWidget extends StatelessWidget {
                   ),
                   subtitle: Style.dateText(
                     transactions[index].date,
+                  ),
+                  trailing: Style.deleteIconButton(
+                    onPressed: () => deleteTransaction(transactions[index].id),
+                    context: context,
                   ),
                 ),
               ),

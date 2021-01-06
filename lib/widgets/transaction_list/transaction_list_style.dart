@@ -54,3 +54,13 @@ Text dateText(DateTime date) => Text(
         date,
       ),
     );
+
+IconButton deleteIconButton({
+  Function onPressed,
+  BuildContext context,
+}) =>
+    IconButton(
+      icon: Icon(Icons.delete),
+      color: Theme.of(context).errorColor,
+      onPressed: onPressed,
+    );
