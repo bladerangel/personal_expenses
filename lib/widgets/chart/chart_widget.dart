@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import './../../widgets/chart_bar/chart_bar_widget.dart';
 import './../../models/transaction.dart';
+import './chart_style.dart' as Style;
 
 class ChartWidget extends StatelessWidget {
   final List<Transaction> transactions;
@@ -51,15 +51,11 @@ class ChartWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: transactionsGroup
               .map(
-                (transactionGroup) => Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBarWidget(
-                    label: transactionGroup['day'],
-                    amount: transactionGroup['amount'],
-                    percentTotalAmount: totalAmount == 0.0
-                        ? 0.0
-                        : (transactionGroup['amount'] as double) / totalAmount,
-                  ),
+                (transactionGroup) => Style.transactionGroupFlexible(
+                  label: transactionGroup['day'],
+                  amount: transactionGroup['amount'],
+                  percentTotalAmount: transactionGroup['amount'] as double,
+                  totalAmount: totalAmount,
                 ),
               )
               .toList(),

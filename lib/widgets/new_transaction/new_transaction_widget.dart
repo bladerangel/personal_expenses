@@ -43,21 +43,20 @@ class _NewTransactionWigetState extends State<NewTransactionWiget> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
+            Style.titleTextField(
+              labelText: 'Title',
               controller: titleInputController,
-              onSubmitted: (_) => submit(),
+              onSubmitted: submit,
             ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amout'),
+            Style.amountTextField(
+              labelText: 'Amout',
               controller: amountInputController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => submit(),
+              onSubmitted: submit,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Style.addNewTransaction(
+                Style.addNewTransactionFlatButton(
                   onPressed: submit,
                 ),
               ],

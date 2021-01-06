@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-Container amountContainer({
+Column emptyTransactionColumn({
+  String data,
+  String image,
   BuildContext context,
-  Widget child,
 }) =>
-    Container(
-      child: child,
-      margin: EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 2,
+    Column(
+      children: [
+        Text(
+          data,
+          style: Theme.of(context).textTheme.headline6,
         ),
-      ),
-      padding: EdgeInsets.all(10),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 200,
+          child: Image.asset(
+            image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
     );
 
-Text amountText(
-  String data, {
-  BuildContext context,
-}) =>
-    Text(
-      data,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
+CircleAvatar amountCircleAvatar(
+  String data,
+) =>
+    CircleAvatar(
+      radius: 30,
+      child: Padding(
+        padding: EdgeInsets.all(6),
+        child: FittedBox(
+          child: Text(
+            data,
+          ),
+        ),
       ),
     );
 
@@ -41,9 +49,8 @@ Text titleText(
       style: Theme.of(context).textTheme.headline6,
     );
 
-Text dateText(String data) => Text(
-      data,
-      style: TextStyle(
-        color: Colors.grey,
+Text dateText(DateTime date) => Text(
+      DateFormat.yMMMd().format(
+        date,
       ),
     );

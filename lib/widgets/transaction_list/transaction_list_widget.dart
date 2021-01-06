@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../models/transaction.dart';
 import './transaction_list_style.dart' as Style;
@@ -17,23 +16,10 @@ class TransactionListWidget extends StatelessWidget {
     return Container(
       height: 300,
       child: transactions.isEmpty
-          ? Column(
-              children: [
-                Text(
-                  'No transactions',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 200,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+          ? Style.emptyTransactionColumn(
+              data: 'No transactions',
+              image: 'assets/images/waiting.png',
+              context: context,
             )
           : ListView.builder(
               itemCount: transactions.length,
@@ -43,25 +29,15 @@ class TransactionListWidget extends StatelessWidget {
                   horizontal: 5,
                 ),
                 child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: EdgeInsets.all(6),
-                      child: FittedBox(
-                        child: Text(
-                          '\$${transactions[index].amout}',
-                        ),
-                      ),
-                    ),
+                  leading: Style.amountCircleAvatar(
+                    '\$${transactions[index].amout}',
                   ),
-                  title: Text(
+                  title: Style.titleText(
                     transactions[index].title,
-                    style: Theme.of(context).textTheme.headline6,
+                    context: context,
                   ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(
-                      transactions[index].date,
-                    ),
+                  subtitle: Style.dateText(
+                    transactions[index].date,
                   ),
                 ),
               ),

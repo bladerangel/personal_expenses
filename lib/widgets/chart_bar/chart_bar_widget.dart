@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './chart_bar_style.dart' as Style;
+
 class ChartBarWidget extends StatelessWidget {
   final String label;
   final double amount;
@@ -42,14 +44,9 @@ class ChartBarWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              FractionallySizedBox(
+              Style.percentTotalAmountFractionallySizedBox(
                 heightFactor: percentTotalAmount,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                context: context,
               ),
             ],
           ),
