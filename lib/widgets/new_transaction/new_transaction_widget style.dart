@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -30,21 +32,31 @@ Expanded selectedDateExpanded(DateTime date) => Expanded(
       ),
     );
 
-FlatButton chooseDateFlatButton(
+Widget chooseDateFlatButton(
   String data, {
   Function onPressed,
   BuildContext context,
 }) =>
-    FlatButton(
-      textColor: Theme.of(context).primaryColor,
-      onPressed: onPressed,
-      child: Text(
-        data,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+    defaultTargetPlatform == TargetPlatform.iOS
+        ? CupertinoButton(
+            child: Text(
+              data,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: onPressed,
+          )
+        : FlatButton(
+            textColor: Theme.of(context).primaryColor,
+            onPressed: onPressed,
+            child: Text(
+              data,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
 
 RaisedButton addNewTransactionRaisedButton(
   String data, {

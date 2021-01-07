@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import './models/transaction.dart';
 import './widgets/new_transaction/new_transaction_widget.dart';
@@ -65,27 +67,21 @@ class _HomePageState extends State<HomePage> {
         () => _transactions.removeWhere((transaction) => transaction.id == id));
   }
 
-  double calculateHeight(AppBar appBar) =>
-      (MediaQuery.of(context).size.height - appBar.preferredSize.height);
-
   @override
   Widget build(BuildContext context) {
     final bool _isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    final AppBar _appBar = Style.appBar(
+    final PreferredSizeWidget _appBar = Style.appBar(
       title: "Personal Expenses",
       onPressed: () => _modalNewTransaction(context),
     );
 
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _modalNewTransaction(context),
-      ),
-      appBar: _appBar,
-      body: SingleChildScrollView(
+    double calculateHeight() =>
+        (MediaQuery.of(context).size.height - _appBar.preferredSize.height);
+
+    final SafeArea _body = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -94,26 +90,27 @@ class _HomePageState extends State<HomePage> {
                 title: 'Show Chart',
                 initialValue: _showChart,
                 onChanged: (value) => setState(() => _showChart = value),
+                context: context,
               ),
             if (!_isLandscape)
               Style.chartWidgetContainer(
-                height: calculateHeight(_appBar) * 0.3,
+                height: calculateHeight() * 0.3,
                 transactions: _recentTransactions,
               ),
             if (!_isLandscape)
               Style.transactionListWidgetContainer(
-                height: calculateHeight(_appBar) * 0.7,
+                height: calculateHeight() * 0.7,
                 transactions: _transactions,
                 deleteTransaction: _deleteTransaction,
               ),
             if (_isLandscape)
               _showChart
                   ? Style.chartWidgetContainer(
-                      height: calculateHeight(_appBar) * 0.7,
+                      height: calculateHeight() * 0.7,
                       transactions: _recentTransactions,
                     )
                   : Style.transactionListWidgetContainer(
-                      height: calculateHeight(_appBar) * 0.7,
+                      height: calculateHeight() * 0.7,
                       transactions: _transactions,
                       deleteTransaction: _deleteTransaction,
                     ),
@@ -121,5 +118,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+
+    return defaultTargetPlatform == TargetPlatform.iOS
+        ? CupertinoPageScaffold(
+            child: _body,
+            navigationBar: _appBar,
+          )
+        : Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Style.modalNewTransactionFloatingActionButton(
+              onPressed: () => _modalNewTransaction(context),
+            ),
+            appBar: _appBar,
+            body: _body,
+          );
   }
 }

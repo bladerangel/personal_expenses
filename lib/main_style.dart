@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import './widgets/transaction_list/transaction_list_widget.dart';
@@ -37,32 +39,59 @@ MaterialApp materialApp({
       home: home,
     );
 
-AppBar appBar({
+PreferredSizeWidget appBar({
   String title,
   Function onPressed,
 }) =>
-    AppBar(
-      title: Text(
-        title,
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: onPressed,
-        ),
-      ],
-    );
+    defaultTargetPlatform == TargetPlatform.iOS
+        ? CupertinoNavigationBar(
+            middle: Text(
+              title,
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  child: Icon(CupertinoIcons.add),
+                  onTap: onPressed,
+                ),
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text(
+              title,
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: onPressed,
+              ),
+            ],
+          );
+
+FloatingActionButton modalNewTransactionFloatingActionButton({
+  Function onPressed,
+}) =>
+    defaultTargetPlatform == TargetPlatform.iOS
+        ? Container()
+        : FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: onPressed,
+          );
 
 Row showChartRow({
   String title,
   bool initialValue,
   Function onChanged,
+  BuildContext context,
 }) =>
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title),
-        Switch(
+        Text(title, style: Theme.of(context).textTheme.headline6),
+        Switch.adaptive(
+          activeColor: Theme.of(context).accentColor,
           value: initialValue,
           onChanged: onChanged,
         )
