@@ -16,49 +16,30 @@ class ChartBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 20,
-          child: FittedBox(
-            child: Text(
-              '\$${amount.toStringAsFixed(0)}',
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) => Column(
+        children: [
+          Style.amountContainer(
+            height: constraints.maxHeight * 0.15,
+            amount: '\$${amount.toStringAsFixed(0)}',
           ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Container(
-          height: 60,
-          width: 10,
-          child: Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
-                  ),
-                  color: Color.fromRGBO(220, 200, 200, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Style.percentTotalAmountFractionallySizedBox(
-                heightFactor: percentTotalAmount,
-                context: context,
-              ),
-            ],
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
           ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(
-          label,
-        ),
-      ],
+          Style.percentTotalAmountContainer(
+            height: constraints.maxHeight * 0.6,
+            heightFactor: percentTotalAmount,
+            context: context,
+          ),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Style.labelContainer(
+            height: constraints.maxHeight * 0.15,
+            label: label,
+          ),
+        ],
+      ),
     );
   }
 }

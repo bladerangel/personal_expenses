@@ -15,39 +15,36 @@ class TransactionListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 450,
-      child: transactions.isEmpty
-          ? Style.emptyTransactionColumn(
-              data: 'No transactions',
-              image: 'assets/images/waiting.png',
-              context: context,
-            )
-          : ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (context, index) => Card(
-                margin: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 5,
+    return transactions.isEmpty
+        ? Style.emptyTransactionLayoutBuilder(
+            data: 'No transactions',
+            image: 'assets/images/waiting.png',
+          )
+        : ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (context, index) => Card(
+              margin: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 5,
+              ),
+              child: ListTile(
+                leading: Style.amountCircleAvatar(
+                  '\$${transactions[index].amout}',
                 ),
-                child: ListTile(
-                  leading: Style.amountCircleAvatar(
-                    '\$${transactions[index].amout}',
-                  ),
-                  title: Style.titleText(
-                    transactions[index].title,
-                    context: context,
-                  ),
-                  subtitle: Style.dateText(
-                    transactions[index].date,
-                  ),
-                  trailing: Style.deleteIconButton(
-                    onPressed: () => deleteTransaction(transactions[index].id),
-                    context: context,
-                  ),
+                title: Style.titleText(
+                  transactions[index].title,
+                  context: context,
+                ),
+                subtitle: Style.dateText(
+                  transactions[index].date,
+                ),
+                trailing: Style.deleteIconButton(
+                  label: 'Delete',
+                  onPressed: () => deleteTransaction(transactions[index].id),
+                  context: context,
                 ),
               ),
             ),
-    );
+          );
   }
 }

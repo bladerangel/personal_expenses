@@ -51,55 +51,60 @@ class _NewTransactionWigetState extends State<NewTransactionWiget> {
       return;
     }
 
-    setState(() {
-      _selectedDate = date;
-    });
+    setState(() => _selectedDate = date);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Style.titleTextField(
-              labelText: 'Title',
-              controller: _titleInputController,
-              onSubmitted: _submit,
-            ),
-            Style.amountTextField(
-              labelText: 'Amout',
-              controller: _amountInputController,
-              onSubmitted: _submit,
-            ),
-            Container(
-              height: 70,
-              child: Row(
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            children: [
+              Style.titleTextField(
+                labelText: 'Title',
+                controller: _titleInputController,
+                onSubmitted: _submit,
+              ),
+              Style.amountTextField(
+                labelText: 'Amout',
+                controller: _amountInputController,
+                onSubmitted: _submit,
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Style.selectedDateExpanded(
+                      _selectedDate,
+                    ),
+                    Style.chooseDateFlatButton(
+                      'Choose Date.',
+                      onPressed: _presentDatePicker,
+                      context: context,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Style.selectedDateExpanded(
-                    _selectedDate,
-                  ),
-                  Style.chooseDateFlatButton(
-                    'Choose Date.',
-                    onPressed: _presentDatePicker,
+                  Style.addNewTransactionRaisedButton(
+                    'Add Transaction',
+                    onPressed: _submit,
                     context: context,
                   ),
                 ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Style.addNewTransactionRaisedButton(
-                  'Add Transaction',
-                  onPressed: _submit,
-                  context: context,
-                ),
-              ],
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

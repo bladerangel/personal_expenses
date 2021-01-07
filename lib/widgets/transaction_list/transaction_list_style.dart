@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Column emptyTransactionColumn({
+LayoutBuilder emptyTransactionLayoutBuilder({
   String data,
   String image,
-  BuildContext context,
 }) =>
-    Column(
-      children: [
-        Text(
-          data,
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          height: 200,
-          child: Image.asset(
-            image,
-            fit: BoxFit.cover,
+    LayoutBuilder(
+      builder: (context, constraints) => Column(
+        children: [
+          Text(
+            data,
+            style: Theme.of(context).textTheme.headline6,
           ),
-        ),
-      ],
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: constraints.maxHeight * 0.6,
+            child: Image.asset(
+              image,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ),
     );
 
 CircleAvatar amountCircleAvatar(
@@ -55,12 +56,20 @@ Text dateText(DateTime date) => Text(
       ),
     );
 
-IconButton deleteIconButton({
+Widget deleteIconButton({
+  String label,
   Function onPressed,
   BuildContext context,
 }) =>
-    IconButton(
-      icon: Icon(Icons.delete),
-      color: Theme.of(context).errorColor,
-      onPressed: onPressed,
-    );
+    MediaQuery.of(context).size.width > 460
+        ? FlatButton.icon(
+            textColor: Theme.of(context).errorColor,
+            icon: Icon(Icons.delete),
+            label: Text(label),
+            onPressed: onPressed,
+          )
+        : IconButton(
+            icon: Icon(Icons.delete),
+            color: Theme.of(context).errorColor,
+            onPressed: onPressed,
+          );

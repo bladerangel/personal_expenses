@@ -1,53 +1,30 @@
 import 'package:flutter/material.dart';
 
-import './widgets/chart/chart_widget.dart';
-import './widgets/transaction_list/transaction_list_widget.dart';
 import './models/transaction.dart';
 import './widgets/new_transaction/new_transaction_widget.dart';
+import './main_style.dart' as Style;
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Style.materialApp(
       title: 'Personal Expenses',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-        errorColor: Colors.red,
-        fontFamily: 'Quicksand',
-        appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'OpenSans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-        ),
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              button: TextStyle(color: Colors.white),
-            ),
-      ),
-      home: MyHomePage(),
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   final List<Transaction> _transactions = [];
+
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions => _transactions
       .where(
@@ -80,47 +57,66 @@ class _MyHomePageState extends State<MyHomePage> {
       date: date,
     );
 
-    setState(() {
-      _transactions.add(transaction);
-    });
+    setState(() => _transactions.add(transaction));
   }
 
   void _deleteTransaction(String id) {
-    setState(() {
-      _transactions.removeWhere((transaction) => transaction.id == id);
-    });
+    setState(
+        () => _transactions.removeWhere((transaction) => transaction.id == id));
   }
+
+  double calculateHeight(AppBar appBar) =>
+      (MediaQuery.of(context).size.height - appBar.preferredSize.height);
 
   @override
   Widget build(BuildContext context) {
+    final bool _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final AppBar _appBar = Style.appBar(
+      title: "Personal Expenses",
+      onPressed: () => _modalNewTransaction(context),
+    );
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => _modalNewTransaction(context),
       ),
-      appBar: AppBar(
-        title: Text(
-          "Personal Expenses",
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _modalNewTransaction(context),
-          ),
-        ],
-      ),
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ChartWidget(
-              transactions: _recentTransactions,
-            ),
-            TransactionListWidget(
-              transactions: _transactions,
-              deleteTransaction: _deleteTransaction,
-            ),
+            if (_isLandscape)
+              Style.showChartRow(
+                title: 'Show Chart',
+                initialValue: _showChart,
+                onChanged: (value) => setState(() => _showChart = value),
+              ),
+            if (!_isLandscape)
+              Style.chartWidgetContainer(
+                height: calculateHeight(_appBar) * 0.3,
+                transactions: _recentTransactions,
+              ),
+            if (!_isLandscape)
+              Style.transactionListWidgetContainer(
+                height: calculateHeight(_appBar) * 0.7,
+                transactions: _transactions,
+                deleteTransaction: _deleteTransaction,
+              ),
+            if (_isLandscape)
+              _showChart
+                  ? Style.chartWidgetContainer(
+                      height: calculateHeight(_appBar) * 0.7,
+                      transactions: _recentTransactions,
+                    )
+                  : Style.transactionListWidgetContainer(
+                      height: calculateHeight(_appBar) * 0.7,
+                      transactions: _transactions,
+                      deleteTransaction: _deleteTransaction,
+                    ),
           ],
         ),
       ),
