@@ -21,11 +21,13 @@ class TransactionListWidget extends StatelessWidget {
             data: 'No transactions',
             image: 'assets/images/waiting.png',
           )
-        : ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (context, index) => TransactionItemWidget(
-                transaction: transactions[index],
-                deleteTransaction: deleteTransaction),
+        : ListView(
+            children: transactions
+                .map((transaction) => TransactionItemWidget(
+                    key: ValueKey(transaction.id),
+                    transaction: transaction,
+                    deleteTransaction: deleteTransaction))
+                .toList(),
           );
   }
 }

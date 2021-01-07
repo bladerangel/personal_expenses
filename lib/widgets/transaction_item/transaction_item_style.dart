@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-CircleAvatar amountCircleAvatar(
+CircleAvatar amountCircleAvatar({
   String data,
-) =>
+  Color backgroundColor,
+}) =>
     CircleAvatar(
+      backgroundColor: backgroundColor,
       radius: 30,
       child: Padding(
         padding: EdgeInsets.all(6),

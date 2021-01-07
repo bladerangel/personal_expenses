@@ -1,9 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 import './../../models/transaction.dart';
 import './transaction_item_style.dart' as Style;
 
-class TransactionItemWidget extends StatelessWidget {
+class TransactionItemWidget extends StatefulWidget {
   const TransactionItemWidget({
     Key key,
     @required this.transaction,
@@ -14,6 +15,25 @@ class TransactionItemWidget extends StatelessWidget {
   final Function deleteTransaction;
 
   @override
+  _TransactionItemWidgetState createState() => _TransactionItemWidgetState();
+}
+
+class _TransactionItemWidgetState extends State<TransactionItemWidget> {
+  Color _color;
+
+  @override
+  void initState() {
+    const colors = [
+      Colors.red,
+      Colors.black,
+      Colors.blue,
+      Colors.purple,
+    ];
+    _color = colors[Random().nextInt(4)];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.symmetric(
@@ -22,18 +42,19 @@ class TransactionItemWidget extends StatelessWidget {
       ),
       child: ListTile(
         leading: Style.amountCircleAvatar(
-          '\$${transaction.amout}',
+          backgroundColor: _color,
+          data: '\$${widget.transaction.amout}',
         ),
         title: Style.titleText(
-          transaction.title,
+          widget.transaction.title,
           context: context,
         ),
         subtitle: Style.dateText(
-          transaction.date,
+          widget.transaction.date,
         ),
         trailing: Style.deleteIconButton(
           label: 'Delete',
-          onPressed: () => deleteTransaction(transaction.id),
+          onPressed: () => widget.deleteTransaction(widget.transaction.id),
           context: context,
         ),
       ),
