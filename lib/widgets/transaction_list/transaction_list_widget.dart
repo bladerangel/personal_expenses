@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './../transaction_item/transaction_item_widget.dart';
 import '../../models/transaction.dart';
 import './transaction_list_style.dart' as Style;
 
@@ -22,29 +23,9 @@ class TransactionListWidget extends StatelessWidget {
           )
         : ListView.builder(
             itemCount: transactions.length,
-            itemBuilder: (context, index) => Card(
-              margin: EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 5,
-              ),
-              child: ListTile(
-                leading: Style.amountCircleAvatar(
-                  '\$${transactions[index].amout}',
-                ),
-                title: Style.titleText(
-                  transactions[index].title,
-                  context: context,
-                ),
-                subtitle: Style.dateText(
-                  transactions[index].date,
-                ),
-                trailing: Style.deleteIconButton(
-                  label: 'Delete',
-                  onPressed: () => deleteTransaction(transactions[index].id),
-                  context: context,
-                ),
-              ),
-            ),
+            itemBuilder: (context, index) => TransactionItemWidget(
+                transaction: transactions[index],
+                deleteTransaction: deleteTransaction),
           );
   }
 }

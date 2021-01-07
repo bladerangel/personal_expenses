@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './../../widgets/chart_bar/chart_bar_widget.dart';
+import './../chart_bar/chart_bar_widget.dart';
 
 Flexible transactionGroupFlexible({
   String label,
